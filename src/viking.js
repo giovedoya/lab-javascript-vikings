@@ -25,7 +25,7 @@ class Viking extends Soldier {
     receiveDamage(theDamage){        
         this.health -= theDamage  
         if (this.health > 0){
-        return (`${this.name} has received ${this.theDamage} points of damage`);
+        return (`${this.name} has received ${theDamage} points of damage`);
     } else {
         return (`${this.name} has died in act of combat`)
     }
@@ -43,7 +43,7 @@ class Saxon extends Soldier {
     receiveDamage(theDamage){
         this.health -= theDamage 
         if (this.health > 0){
-            return (`A Saxon has received ${this.theDamage} points of damage`);
+            return (`A Saxon has received ${theDamage} points of damage`);
         } else {
             return ('A Saxon has died in combat')
         }
@@ -57,32 +57,37 @@ class War {
         this.saxonArmy = saxonArmy;
     }
     addViking(viking){ [
-        this.Viking.push(viking1),
-        this.Viking.push(viking2),
-        this.Viking.push(viking3),
-        this.Viking.push(viking4),
-        this.Viking.push(viking5),
-        this.Viking.push(viking6),
-        this.Viking.push(viking7),
-        this.Viking.push(viking8),
-        this.Viking.push(viking9),
-        this.Viking.push(viking10)
+        this.vikingArmy.push(viking)
     ]
-    this.vikingArmy = vikingArmy
+    
     }
     addSaxon(saxon){ [
-
+        this.saxonArmy.push(saxon)
     ]
-
-
     }
-    vikingAttack(){
-
+    vikingAttack () {
+        const result = this.saxonArmy[0].receiveDamage(this.vikingArmy[0].strength)
+        if (this.saxonArmy[0].health <= 0) {
+            this.saxonArmy.shift();
+        }
+        return result;
     }
+
     saxonAttack(){
-
+        const attackSaxon = this.vikingArmy[0].receiveDamage(this.saxonArmy[0].strength)
+        if (this.vikingArmy[0].health <= 0){
+            this.vikingArmy.shift();
+        }
+        return attackSaxon;
     }
-    showStatus(){
+    showStatus (){
+        if (this.saxonArmy.length === 0) {
+            return 'Vikings have won the war of the century!'
+        }
+       if (this.vikingArmy.length === 0) {
+            return 'Saxons have fought for their lives and survived another day...'
+       }
 
+       return 'Vikings and Saxons are still in the thick of battle.'
     }
 }
